@@ -143,7 +143,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <h3>A r-card with a simple heading, header image, body content, and actions. Header image aspect-ratio is 1:1</h3>
   <demo-snippet>
     <template>
-      <r-card heading="Emmental" image-sizing="cover" image-aspect-ratio="1:1" image="http://placehold.it/350x350/FFC107/000000" scrim="2" controls>
+      <r-card heading="Emmental" image-sizing="cover" image-aspect-ratio="1:1" image="http://placehold.it/350x350/FFC107/000000" scrim="2" >
         <div class="card-content">
           Emmentaler or Emmental is a yellow, medium-hard cheese that originated in the area around Emmental, Switzerland. It is one of the cheeses of Switzerland, and is sometimes known as Swiss cheese.
         </div>
@@ -151,21 +151,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
           <paper-button>Share</paper-button>
           <paper-button>Explore!</paper-button>
         </div>
-          <template class="menu">
-            <paper-listbox selected-attribute="selected" attr-for-selected="view">
-              <div class="group-heading">Some text</div>
-              <paper-icon-item view="map"><iron-icon icon="view-list" item-icon></iron-icon><paper-item-body>More</paper-item-body></paper-icon-item>
-              <paper-icon-item view="map"><iron-icon icon="view-list" item-icon></iron-icon><paper-item-body>More</paper-item-body></paper-icon-item>
-              <paper-icon-item view="map"><iron-icon icon="view-list" item-icon></iron-icon><paper-item-body>More</paper-item-body></paper-icon-item>
-            </paper-listbox>
-          </template>
-          <template class="menu">
-            <paper-listbox selected-attribute="selected" attr-for-selected="view">
-              <paper-icon-item view="map"><iron-icon icon="view-list" item-icon></iron-icon><paper-item-body>More</paper-item-body></paper-icon-item>
-              <paper-icon-item view="map"><iron-icon icon="view-list" item-icon></iron-icon><paper-item-body>More</paper-item-body></paper-icon-item>
-              <paper-icon-item view="map"><iron-icon icon="view-list" item-icon></iron-icon><paper-item-body>More</paper-item-body></paper-icon-item>
-            </paper-listbox>
-          </template>
       </r-card>
     </template>
   </demo-snippet>
