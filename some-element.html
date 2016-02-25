@@ -1,0 +1,74 @@
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="./r-card.html">
+<link rel="import" href="./r-card-behavior.html">
+<link rel="import" href="../paper-listbox/paper-listbox.html">
+<link rel="import" href="../paper-item/paper-icon-item.html">
+
+<dom-module id="some-element">
+  <template>
+    <style include="paper-material">
+
+      /* IE 10 support for HTML5 hidden attr */
+      [hidden] {
+        display: none !important;
+      }
+
+    </style>
+    <template id="menuAdd" class="menu">
+      <paper-listbox selected-attribute="selected" attr-for-selected="action">
+        <template is="dom-repeat" items="[[views]]" as="view">
+          <paper-icon-item action="[[view.action]]"><iron-icon icon="[[view.view]]" item-icon></iron-icon><paper-item-body>[[view.content]]</paper-item-body></paper-icon-item>
+        </template>
+      </paper-listbox>
+    </template>
+    <content select="template.menu" id="menuTemplates"></content>
+    <r-card id="card" heading$="[[heading]]" image-sizing$="[[imageSizing]]" image-aspect-ratio$="[[imageAspectRatio]]" image$="[[image]]" scrim$="[[scrim]]" controls$="[[controls]]">
+      <content></content>
+    </r-card>
+  </template>
+
+  <script>
+    Polymer({
+      is: 'some-element',
+      behaviors: [
+        Polymer.RCardBehavior,
+        Polymer.Templatizer
+      ],
+      listeners: {'card.controls-ready':'_addControls'},
+      properties: {
+
+      },
+      ready:function(){
+      },
+      _addControls:function(e){
+        var a = [{view:'alarm', content:'lala', action: 'alarm'},{view:'account-box', content:'dada', action:'account'},{view:'add-alert', content:'gaga', action:'alert'}];
+        this.addMenuSection(this.$.menuAdd, a, e.detail.container);
+
+        var userTemplates = [].slice.call(Polymer.dom(this.$.menuTemplates).getDistributedNodes()).filter(function(node){return (node.nodeType === Node.ELEMENT_NODE)});
+        if(userTemplates && userTemplates.length>0){
+          userTemplates.forEach(function(template){this.addMenuSection(template, [], e.detail.container);}.bind(this));
+        }
+        this.updateStyles();
+      },
+      alarm:function(){
+        console.log('alarm was clicked');
+      },
+      account:function(){
+        console.log('account was clicked');
+      },
+      alert:function(){
+        console.log('alert was clicked');
+      }
+    });
+  </script>
+</dom-module>
