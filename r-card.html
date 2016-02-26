@@ -18,6 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-item/paper-icon-item.html">
+<link rel="import" href="../paper-tooltip/paper-tooltip.html">
 
 
 
@@ -92,6 +93,7 @@ Custom property | Description | Default
         border-top-left-radius: inherit;
         border-top-right-radius: inherit;
         overflow: hidden;
+        margin-bottom:-4px;
 
         @apply(--r-card-header);
       }
@@ -121,7 +123,7 @@ Custom property | Description | Default
       }
       .header #menuButton {
         position:absolute;
-         --paper-icon-button-ink-color: var(--r-card-header-color, #000);
+        --paper-icon-button-ink-color: var(--r-card-header-color, #000);
       }
       .header .title-text {
         font-size: 24px;
@@ -141,7 +143,7 @@ Custom property | Description | Default
         right:0;
         left:0;
       }
-      .header .over-image .title-text{
+      .header .over-image .title-text, .header #toolboxToggle{
         @apply(--r-card-header-over-image);
       }
       .header [scrim]{
@@ -183,6 +185,18 @@ Custom property | Description | Default
         border-top: 1px solid rgba(0,0,0,0.12);
         margin:0;
       }
+      :host #toolboxContainer ::content #toolbox {
+        @apply(--layout-horizontal);
+        @apply(--layout-end-justified);
+        box-shadow: #ccc 0 0 8px inset;
+        background-color: rgba(249,249,249,0.04);
+
+        @apply(--r-card-toolbox);
+      }
+      :host #toolboxToggle {
+        margin: auto 0;
+        opacity:0.8;
+      }
 
     </style>
 
@@ -192,9 +206,8 @@ Custom property | Description | Default
       <div class$="[[_computeHeadingClass(image)]]" hidden$="[[!heading]]">
         <iron-icon hidden$="[[!icon]]" icon="[[icon]]"></iron-icon>
         <div class="title-text" >[[heading]]</div>
-        <template is="dom-if" if="{{speechEnabled}}">
-          <r-speech-input-button hidden$="[[!assisted]]" context$={{context}} action-data="{{actionData}}"></r-speech-input-button>
-        </template>
+        <paper-tooltip for="toolboxToggle" position="left">Toggle Toolbox drawer</paper-tooltip>
+        <paper-icon-button icon="settings-applications" on-tap="_toggleToolbox" hidden$="[[!toolbox]]" id="toolboxToggle"></paper-icon-button>
         <template is="dom-if" if="[[controls]]" id="controls">
           <div class="controls-container">
             <paper-menu-button horizontal-align="right" vertical-offset="52" id="menuButton">
@@ -205,7 +218,12 @@ Custom property | Description | Default
         </template>
       </div>
     </div>
-
+    <iron-collapse id="toolboxContainer" style="width:100%;">
+      <content select="#toolbox"></content>
+      <template is="dom-if" if="{{speechEnabled}}">
+        <r-speech-input-button hidden$="[[!assisted]]" context$={{context}} action-data="{{actionData}}"></r-speech-input-button>
+      </template>
+    </iron-collapse>
     <content select="template.menu" id="menuTemplates"></content>
     <content></content>
   </template>
@@ -220,8 +238,14 @@ Custom property | Description | Default
        */
       _controlsReady:function(){
         if(this.$$('.controls-container .dropdown-content')){
-            this.fire('controls-ready',{container:this.$$('.controls-container .dropdown-content')})
+          this.fire('controls-ready',{container:this.$$('.controls-container .dropdown-content')})
         }
+      },
+      _toggleToolbox:function(){
+        var toolbox = this.$.toolboxContainer;
+        //var iconButton = Polymer.dom(event).localTarget;
+        //iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up' : 'hardware:keyboard-arrow-down';
+        toolbox.toggle();
       }
 
       /**
