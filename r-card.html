@@ -13,12 +13,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-image/iron-image.html">
 <link rel="import" href="../paper-material/paper-material.html">
 <link rel="import" href="../paper-styles/default-theme.html">
-<link rel="import" href="./r-card-behavior.html">
 <link rel="import" href="../paper-menu-button/paper-menu-button.html">
 <link rel="import" href="../paper-icon-button/paper-icon-button.html">
 <link rel="import" href="../paper-listbox/paper-listbox.html">
 <link rel="import" href="../paper-item/paper-icon-item.html">
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
+<link rel="import" href="../iron-collapse/iron-collapse.html">
+<link rel="import" href="./r-card-behavior.html">
 
 
 
@@ -218,7 +219,7 @@ Custom property | Description | Default
         </template>
       </div>
     </div>
-    <iron-collapse id="toolboxContainer" style="width:100%;">
+    <iron-collapse id="toolboxContainer" style="width:100%;" hidden$="[[!toolbox]]">
       <content select="#toolbox"></content>
       <template is="dom-if" if="{{speechEnabled}}">
         <r-speech-input-button hidden$="[[!assisted]]" context$={{context}} action-data="{{actionData}}"></r-speech-input-button>
@@ -241,8 +242,9 @@ Custom property | Description | Default
           this.fire('controls-ready',{container:this.$$('.controls-container .dropdown-content')})
         }
       },
-      _toggleToolbox:function(){
-        var toolbox = this.$.toolboxContainer;
+      _toggleToolbox:function(e){
+        var toolbox = Polymer.dom(e).path.find(function(el){return el.localName=='r-card'}).querySelector('#toolboxContainer');
+        console.log(toolbox)
         //var iconButton = Polymer.dom(event).localTarget;
         //iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up' : 'hardware:keyboard-arrow-down';
         toolbox.toggle();

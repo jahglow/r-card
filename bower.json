@@ -28,7 +28,8 @@
     "paper-item": "PolymerElements/paper-item#^1.0.0",
     "paper-listbox": "polymerelements/paper-listbox#^1.0.0",
     "paper-menu-button": "PolymerElements/paper-menu-button#^1.0.0",
-    "paper-tooltip": "PolymerElements/paper-tooltip#^1.0.0"
+    "paper-tooltip": "PolymerElements/paper-tooltip#^1.0.0",
+    "iron-collapse": "PolymerElements/iron-collapse#^1.0.6"
   },
   "devDependencies": {
     "iron-collapse": "PolymerElements/iron-collapse#^1.0.0",
