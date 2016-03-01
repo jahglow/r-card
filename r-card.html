@@ -243,8 +243,8 @@ Custom property | Description | Default
         }
       },
       _toggleToolbox:function(e){
-        var toolbox = Polymer.dom(e).path.find(function(el){return el.localName=='r-card'}).querySelector('#toolboxContainer');
-        console.log(toolbox)
+        console.log(e);
+        var toolbox = Polymer.dom(e).path.filter(function(el){return el.localName=='r-card'})[0].querySelector('#toolboxContainer');
         //var iconButton = Polymer.dom(event).localTarget;
         //iconButton.icon = moreInfo.opened ? 'hardware:keyboard-arrow-up' : 'hardware:keyboard-arrow-down';
         toolbox.toggle();
