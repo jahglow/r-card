@@ -83,6 +83,11 @@ Custom property | Description | Default
         @apply(--layout-vertical);
         @apply(--r-card);
       }
+      :host::before{
+        content: 'r-card';
+        display:none;
+        @apply(--r-card-before);
+      }
 
       /* IE 10 support for HTML5 hidden attr */
       [hidden] {
@@ -232,7 +237,7 @@ Custom property | Description | Default
   <script>
     Polymer({
       is: 'r-card',
-      behaviors:[Polymer.RCardBehavior],
+      behaviors:[Confirmit.RCardBehavior],
       listeners: {'controls.dom-change':'_controlsReady'},
       /**
        * Fires a  `controls-ready` {CustomEvent} when `template#controls` is stamped

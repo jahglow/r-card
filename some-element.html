@@ -122,6 +122,12 @@ Its basic usage you can see in the demo as the first element
       [hidden] {
         display: none !important;
       }
+      :host::before{
+        content: 'some-element';
+        display:none;
+        @apply(--r-card-before);
+      }
+
 
     </style>
     <template id="menuAdd" class="menu">
@@ -152,7 +158,7 @@ Its basic usage you can see in the demo as the first element
     Polymer({
       is: 'some-element',
       behaviors: [
-        Polymer.RCardBehavior,
+        Confirmit.RCardBehavior,
         Polymer.Templatizer
       ],
       listeners: {'card.controls-ready':'_addControls'},
