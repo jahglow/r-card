@@ -259,12 +259,12 @@ Custom property | Description | Default
                 this.cancelDebouncer('chHeight');
                 var chartId = charts[i].getAttribute('data-highcharts-chart');
                 var chart = Highcharts.charts[parseInt(chartId)];
-                chart.options.chart.width = 100;
+                chart.options.chart.width = chart.options.chart.height = 100;
                 chart.reflow();
                 this.debounce('chHeight',function(){
-                  chart.options.chart.width = null;
+                  chart.options.chart.width = chart.options.chart.height = null;
                   chart.reflow();
-                },50);
+                },70);
               }
             }
           }
