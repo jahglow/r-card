@@ -20,6 +20,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../paper-tooltip/paper-tooltip.html">
 <link rel="import" href="../iron-collapse/iron-collapse.html">
 <link rel="import" href="./r-card-behavior.html">
+<link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
 
 
 
@@ -70,7 +71,7 @@ Custom property | Description | Default
 -->
 
 <dom-module id="r-card">
-  <template>
+  <template strip-whitespace>
     <style include="paper-material">
       :host {
         display: inline-block;
@@ -237,8 +238,38 @@ Custom property | Description | Default
   <script>
     Polymer({
       is: 'r-card',
-      behaviors:[Confirmit.RCardBehavior],
-      listeners: {'controls.dom-change':'_controlsReady'},
+      behaviors:[
+        Confirmit.RCardBehavior,
+        Polymer.IronResizableBehavior
+      ],
+      listeners: {
+        'controls.dom-change':'_controlsReady',
+        'iron-resize': '_onIronResize'
+      },
+      /**
+       * reflow Highcharts inside the card when the card is resized
+       * */
+      _onIronResize:function(e){
+        this.debounce('reflowCharts', function(){
+          var el = e.target;
+          if(typeof Highcharts !== 'undefined'){
+            var charts = el.querySelectorAll('div[data-highcharts-chart]');
+            if(charts && charts.length>0){
+              for(var i=0;i<charts.length;i++){
+                this.cancelDebouncer('chHeight');
+                var chartId = charts[i].getAttribute('data-highcharts-chart');
+                var chart = Highcharts.charts[parseInt(chartId)];
+                chart.options.chart.width = 100;
+                chart.reflow();
+                this.debounce('chHeight',function(){
+                  chart.options.chart.width = null;
+                  chart.reflow();
+                },50);
+              }
+            }
+          }
+        }, 300);
+      },
       /**
        * Fires a  `controls-ready` {CustomEvent} when `template#controls` is stamped
        */
