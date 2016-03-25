@@ -58,7 +58,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       elevation: {
         type: Number,
         value: 1,
-        reflectToAttribute: true
+        reflectToAttribute: true,
+        meta:{
+          min:0,
+          max:5
+        }
+
       },
 
       /**
@@ -88,7 +93,11 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       imageSizing: {
         type: String,
-        value: null
+        value: null,
+        meta:{
+          options:['contain','cover', '']
+        }
+
       },
       /**
        * Sets an aspect ratio for the image in the header,
@@ -96,7 +105,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        * Valid values are `16:9` and `1:1`.
        * If you specify `imageAspectRatio`, make sure that `imageSizing` is set to `cover`
        */
-      imageAspectRatio:String,
+      imageAspectRatio:{
+        type:String,
+        value: null,
+        meta:{
+          options:['16:9','1:1','']
+        }
+      },
       /**
        * Sets a scrim opacity under header text as a gradient underlay to make the text readable against the background image.
        * Provide a number ranging from 0-6, where 0 is no scrim at all (default) and 6 is 60% opaque scrim.
@@ -104,7 +119,12 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
        */
       scrim:{
         type:Number,
-        value:0
+        value:0,
+        meta:{
+          min:0,
+          max:6
+        }
+
       },
       /**
        * The icon on the left of the tile.
@@ -143,7 +163,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     },
 
     _computeAspectRatio:function(ratio,imageSizing,image){
-      if(image.length>0 && this.$.headerImage)this.$.headerImage.style.paddingTop = (ratio === '16:9'?'56.5%':'100%');
+      if(image.length>0 && this.$.headerImage && imageSizing!==null){this.$.headerImage.style.paddingTop = (ratio === '16:9'?'56.5%':'100%')} else {this.$.headerImage.style.paddingTop=''}
     },
 
     /**
@@ -180,7 +200,5 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       Polymer.dom(container).appendChild(clone.root);
       //this.updateStyles();
     }
-
-
   };
 </script>
