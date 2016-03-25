@@ -21,6 +21,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <link rel="import" href="../iron-collapse/iron-collapse.html">
 <link rel="import" href="./r-card-behavior.html">
 <link rel="import" href="../iron-resizable-behavior/iron-resizable-behavior.html">
+<link rel="import" href="../r-customizer/r-customizer-inspect-behavior.html">
 
 
 
@@ -87,7 +88,7 @@ Custom property | Description | Default
       :host::before{
         content: 'r-card';
         display:none;
-        @apply(--r-card-before);
+        @apply(--r-customizer-hover);
       }
 
       /* IE 10 support for HTML5 hidden attr */
@@ -240,6 +241,7 @@ Custom property | Description | Default
       is: 'r-card',
       behaviors:[
         Confirmit.RCardBehavior,
+        Confirmit.RCustomizerInspectBehavior,
         Polymer.IronResizableBehavior
       ],
       listeners: {
